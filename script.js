@@ -4,6 +4,7 @@ const invitation = document.getElementById("invitation");
 const backTop = document.getElementById("backTop");
 
 openButton.addEventListener("click", () => {
+  document.getElementById("backgroundMusic").play().catch(() => {});
   cover.classList.add("opened");
 
   setTimeout(() => {
