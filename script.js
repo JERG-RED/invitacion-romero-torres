@@ -1,222 +1,131 @@
 /* =========================================
-   ELEMENTOS PRINCIPALES
+   ELEMENTOS
 ========================================= */
 
-const openButton = document.getElementById("openInvitation");
 const cover = document.getElementById("cover");
+
 const invitation = document.getElementById("invitation");
-const backTop = document.getElementById("backTop");
+
+const openInvitation =
+  document.getElementById("openInvitation");
+
+const backgroundMusic =
+  document.getElementById("backgroundMusic");
+
+const musicButton =
+  document.getElementById("musicButton");
+
+const musicIcon =
+  document.getElementById("musicIcon");
+
+const backTop =
+  document.getElementById("backTop");
 
 
 /* =========================================
-   🎵 ELEMENTOS DE MÚSICA
+   ABRIR INVITACIÓN
 ========================================= */
 
-const music = document.getElementById("backgroundMusic");
-const musicButton = document.getElementById("musicButton");
-const musicIcon = document.getElementById("musicIcon");
+if (openInvitation) {
+
+  openInvitation.addEventListener("click", async () => {
+
+    cover.classList.add("opened");
+
+    setTimeout(() => {
+
+      cover.style.display = "none";
+
+      invitation.classList.remove("hidden");
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }, 650);
 
 
-/* =========================================
-   🎵 ACTUALIZAR ESTADO DEL BOTÓN
-========================================= */
+    /* Intentar iniciar música */
 
-function setMusicPlaying() {
+    if (backgroundMusic) {
 
-  if (!musicButton || !musicIcon) {
-    return;
-  }
+      try {
 
-  musicButton.classList.add("playing");
+        await backgroundMusic.play();
 
-  musicIcon.textContent = "Ⅱ";
+        if (musicButton) {
+          musicButton.classList.add("playing");
+        }
 
-  musicButton.setAttribute(
-    "aria-label",
-    "Pausar música"
-  );
+        if (musicIcon) {
+          musicIcon.textContent = "♫";
+        }
+
+      } catch (error) {
+
+        console.log(
+          "La música necesita ser iniciada manualmente."
+        );
+
+      }
+
+    }
+
+  });
+
 }
 
 
-function setMusicPaused() {
-
-  if (!musicButton || !musicIcon) {
-    return;
-  }
-
-  musicButton.classList.remove("playing");
-
-  musicIcon.textContent = "♫";
-
-  musicButton.setAttribute(
-    "aria-label",
-    "Reproducir música"
-  );
-}
-
-
 /* =========================================
-   🎵 REPRODUCIR MÚSICA
+   🎵 MÚSICA
 ========================================= */
 
-function playMusic() {
+if (musicButton && backgroundMusic) {
 
-  if (!music) {
-    return;
-  }
+  musicButton.addEventListener("click", async () => {
 
-  music.play()
-    .then(() => {
+    if (backgroundMusic.paused) {
 
-      setMusicPlaying();
+      try {
 
-    })
-    .catch(() => {
+        await backgroundMusic.play();
 
-      /*
-        Algunos navegadores pueden bloquear
-        la reproducción automática.
+        musicButton.classList.add("playing");
 
-        En ese caso el usuario podrá tocar
-        el botón de música manualmente.
-      */
+        if (musicIcon) {
+          musicIcon.textContent = "♫";
+        }
 
-      console.log(
-        "El navegador requiere interacción para reproducir la música."
+        musicButton.setAttribute(
+          "aria-label",
+          "Pausar música"
+        );
+
+      } catch (error) {
+
+        console.log(
+          "No fue posible reproducir la música."
+        );
+
+      }
+
+    } else {
+
+      backgroundMusic.pause();
+
+      musicButton.classList.remove("playing");
+
+      if (musicIcon) {
+        musicIcon.textContent = "♪";
+      }
+
+      musicButton.setAttribute(
+        "aria-label",
+        "Reproducir música"
       );
 
-    });
-}
-
-
-/* =========================================
-   🎵 PAUSAR MÚSICA
-========================================= */
-
-function pauseMusic() {
-
-  if (!music) {
-    return;
-  }
-
-  music.pause();
-
-  setMusicPaused();
-}
-
-
-/* =========================================
-   💌 ABRIR INVITACIÓN
-========================================= */
-
-openButton.addEventListener("click", () => {
-
-  /*
-    El usuario acaba de interactuar con la página.
-    Esto permite intentar reproducir el audio.
-  */
-
-  playMusic();
-
-
-  /*
-    Animación de salida de la portada
-  */
-
-  cover.classList.add("opened");
-
-
-  /*
-    Después de la animación mostramos
-    la invitación.
-  */
-
-  setTimeout(() => {
-
-    cover.style.display = "none";
-
-    invitation.classList.remove("hidden");
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-
-  }, 650);
-
-});
-
-
-/* =========================================
-   🎵 BOTÓN DE MÚSICA
-========================================= */
-
-musicButton.addEventListener("click", () => {
-
-  if (!music) {
-    return;
-  }
-
-
-  /*
-    Si está pausada → reproducir
-  */
-
-  if (music.paused) {
-
-    playMusic();
-
-  }
-
-  /*
-    Si está reproduciendo → pausar
-  */
-
-  else {
-
-    pauseMusic();
-
-  }
-
-});
-
-
-/* =========================================
-   🎵 EVENTOS DEL AUDIO
-========================================= */
-
-if (music) {
-
-  /*
-    Cuando realmente comienza la reproducción
-  */
-
-  music.addEventListener("play", () => {
-
-    setMusicPlaying();
-
-  });
-
-
-  /*
-    Cuando se pausa
-  */
-
-  music.addEventListener("pause", () => {
-
-    setMusicPaused();
-
-  });
-
-
-  /*
-    Si termina, como usamos loop,
-    normalmente volverá a comenzar.
-  */
-
-  music.addEventListener("ended", () => {
-
-    setMusicPlaying();
+    }
 
   });
 
@@ -227,14 +136,6 @@ if (music) {
    ⏳ CUENTA REGRESIVA
 ========================================= */
 
-/*
-  Fecha del evento:
-
-  6 de diciembre de 2026
-  00:00
-  Hora de Bogotá (UTC-5)
-*/
-
 const eventDate =
   new Date(
     "2026-12-06T00:00:00-05:00"
@@ -243,105 +144,99 @@ const eventDate =
 
 function updateCountdown() {
 
-  const now = Date.now();
+  const now =
+    new Date().getTime();
 
   const distance =
     eventDate - now;
 
 
-  /*
-    Si la fecha ya llegó
-  */
+  const days =
+    document.getElementById("days");
+
+  const hours =
+    document.getElementById("hours");
+
+  const minutes =
+    document.getElementById("minutes");
+
+  const seconds =
+    document.getElementById("seconds");
+
 
   if (distance <= 0) {
 
-    document.getElementById("days").textContent = "00";
+    if (days) days.textContent = "00";
 
-    document.getElementById("hours").textContent = "00";
+    if (hours) hours.textContent = "00";
 
-    document.getElementById("minutes").textContent = "00";
+    if (minutes) minutes.textContent = "00";
 
-    document.getElementById("seconds").textContent = "00";
+    if (seconds) seconds.textContent = "00";
 
     return;
+
   }
 
 
-  /*
-    Cálculo de días
-  */
-
-  const days =
+  const daysValue =
     Math.floor(
-      distance / 86400000
+      distance /
+      (1000 * 60 * 60 * 24)
     );
 
 
-  /*
-    Cálculo de horas
-  */
-
-  const hours =
+  const hoursValue =
     Math.floor(
-      (distance % 86400000) /
-      3600000
+      (distance %
+        (1000 * 60 * 60 * 24)) /
+        (1000 * 60 * 60)
     );
 
 
-  /*
-    Cálculo de minutos
-  */
-
-  const minutes =
+  const minutesValue =
     Math.floor(
-      (distance % 3600000) /
-      60000
+      (distance %
+        (1000 * 60 * 60)) /
+        (1000 * 60)
     );
 
 
-  /*
-    Cálculo de segundos
-  */
-
-  const seconds =
+  const secondsValue =
     Math.floor(
-      (distance % 60000) /
-      1000
+      (distance %
+        (1000 * 60)) /
+        1000
     );
 
 
-  /*
-    Mostrar resultados
-  */
-
-  document.getElementById("days").textContent =
-    String(days).padStart(2, "0");
+  if (days) {
+    days.textContent =
+      String(daysValue).padStart(2, "0");
+  }
 
 
-  document.getElementById("hours").textContent =
-    String(hours).padStart(2, "0");
+  if (hours) {
+    hours.textContent =
+      String(hoursValue).padStart(2, "0");
+  }
 
 
-  document.getElementById("minutes").textContent =
-    String(minutes).padStart(2, "0");
+  if (minutes) {
+    minutes.textContent =
+      String(minutesValue).padStart(2, "0");
+  }
 
 
-  document.getElementById("seconds").textContent =
-    String(seconds).padStart(2, "0");
+  if (seconds) {
+    seconds.textContent =
+      String(secondsValue).padStart(2, "0");
+  }
 
 }
 
 
-/*
-  Ejecutar inmediatamente
-*/
-
 updateCountdown();
-
-
-/*
-  Actualizar cada segundo
-*/
 
 setInterval(
   updateCountdown,
@@ -350,38 +245,171 @@ setInterval(
 
 
 /* =========================================
-   ⬆️ BOTÓN VOLVER ARRIBA
+   🖼️ VISOR DE IMÁGENES
 ========================================= */
 
-window.addEventListener("scroll", () => {
+const imageViewer =
+  document.getElementById("imageViewer");
 
-  if (window.scrollY > 500) {
+const viewerImage =
+  document.getElementById("viewerImage");
 
-    backTop.classList.add("visible");
-
-  }
-
-  else {
-
-    backTop.classList.remove("visible");
-
-  }
-
-});
+const closeViewer =
+  document.getElementById("closeViewer");
 
 
-/* =========================================
-   ⬆️ VOLVER ARRIBA
-========================================= */
+const zoomableImages =
+  document.querySelectorAll(
+    ".zoomable-image"
+  );
 
-backTop.addEventListener("click", () => {
 
-  window.scrollTo({
+/* Abrir imagen */
 
-    top: 0,
+zoomableImages.forEach((image) => {
 
-    behavior: "smooth"
+  image.addEventListener("click", () => {
+
+    if (!imageViewer || !viewerImage) {
+      return;
+    }
+
+
+    viewerImage.src =
+      image.src;
+
+
+    viewerImage.alt =
+      image.alt;
+
+
+    imageViewer.classList.add("active");
+
+
+    /* Evita que la página se mueva */
+
+    document.body.style.overflow =
+      "hidden";
 
   });
 
 });
+
+
+/* Cerrar visor */
+
+function closeImageViewer() {
+
+  if (!imageViewer) {
+    return;
+  }
+
+
+  imageViewer.classList.remove("active");
+
+
+  document.body.style.overflow =
+    "";
+
+}
+
+
+if (closeViewer) {
+
+  closeViewer.addEventListener(
+    "click",
+    closeImageViewer
+  );
+
+}
+
+
+/* Cerrar tocando fuera de la imagen */
+
+if (imageViewer) {
+
+  imageViewer.addEventListener(
+    "click",
+    (event) => {
+
+      if (
+        event.target === imageViewer
+      ) {
+
+        closeImageViewer();
+
+      }
+
+    }
+  );
+
+}
+
+
+/* Cerrar con ESC */
+
+document.addEventListener(
+  "keydown",
+  (event) => {
+
+    if (
+      event.key === "Escape"
+    ) {
+
+      closeImageViewer();
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   ↑ VOLVER ARRIBA
+========================================= */
+
+window.addEventListener(
+  "scroll",
+  () => {
+
+    if (!backTop) {
+      return;
+    }
+
+
+    if (window.scrollY > 500) {
+
+      backTop.classList.add(
+        "visible"
+      );
+
+    } else {
+
+      backTop.classList.remove(
+        "visible"
+      );
+
+    }
+
+  }
+);
+
+
+if (backTop) {
+
+  backTop.addEventListener(
+    "click",
+    () => {
+
+      window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
+
+      });
+
+    }
+  );
+
+}
