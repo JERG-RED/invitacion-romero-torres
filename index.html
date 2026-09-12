@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#f5efe3">
+  <meta name="description" content="Invitación digital Romero Torres">
+  <title>Romero Torres | Invitación</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="grain"></div>
+
+  <!-- Pantalla de bienvenida -->
+  <section id="cover" class="cover">
+    <div class="ornament ornament-top">✦</div>
+    <div class="cover-content">
+      <p class="eyebrow">UNA CELEBRACIÓN ESPECIAL</p>
+      <img src="portada.png" alt="Romero Torres" class="cover-image">
+      <p class="cover-caption">Con mucha alegría queremos compartir este momento contigo</p>
+      <button id="openInvitation" class="gold-button">
+        <span>Abrir invitación</span>
+        <span class="arrow">↓</span>
+      </button>
+    </div>
+    <div class="ornament ornament-bottom">✦</div>
+  </section>
+
+  <!-- Invitación -->
+  <main id="invitation" class="invitation hidden">
+    <header class="hero">
+      <div class="hero-glow"></div>
+      <p class="eyebrow">ROMERO TORRES</p>
+      <h1>Una fecha para<br><em>recordar</em></h1>
+      <div class="line"></div>
+      <p class="hero-date">06 · DICIEMBRE · 2026</p>
+    </header>
+
+    <section class="card-section">
+      <img src="invitacion.png" alt="Invitación Romero Torres" class="invitation-image">
+    </section>
+
+    <section class="details">
+      <p class="eyebrow">TE ESPERAMOS</p>
+      <h2>Un momento especial<br><em>para compartir</em></h2>
+
+      <div class="countdown" aria-label="Cuenta regresiva">
+        <div><strong id="days">--</strong><span>días</span></div>
+        <div><strong id="hours">--</strong><span>horas</span></div>
+        <div><strong id="minutes">--</strong><span>minutos</span></div>
+        <div><strong id="seconds">--</strong><span>segundos</span></div>
+      </div>
+    </section>
+
+    <section class="action-section">
+      <a class="action-card" target="_blank" rel="noopener"
+         href="https://www.google.com/maps?um=1&ie=UTF-8&fb=1&gl=co&sa=X&geocode=KWeLcJcynD-OMe5exq8mENdR&daddr=Cl.+39a+Sur+%2389C-37,+Kennedy,+Bogotá">
+        <span class="icon">⌖</span>
+        <span>
+          <small>PARROQUIA</small>
+          <strong>Cómo llegar</strong>
+          <b>Cl. 39A Sur #89C-37 · Bogotá</b>
+        </span>
+        <span class="chevron">›</span>
+      </a>
+
+      <!-- Cambia el número de abajo por el WhatsApp de confirmación -->
+      <a class="action-card" target="_blank" rel="noopener"
+         href="https://wa.me/57XXXXXXXXXX?text=Hola%2C%20quiero%20confirmar%20mi%20asistencia%20a%20la%20celebraci%C3%B3n%20Romero%20Torres.">
+        <span class="icon">♡</span>
+        <span>
+          <small>RSVP</small>
+          <strong>Confirmar asistencia</strong>
+          <b>Responder por WhatsApp</b>
+        </span>
+        <span class="chevron">›</span>
+      </a>
+    </section>
+
+    <section class="closing">
+      <div class="floral">❦</div>
+      <p>Será un honor contar contigo.</p>
+      <h2>Romero <span>&</span> Torres</h2>
+      <p class="small">Con cariño, esperamos verte.</p>
+    </section>
+
+    <footer>
+      <span>06 · 12 · 2026</span>
+      <span>♡</span>
+      <span>BOGOTÁ</span>
+    </footer>
+  </main>
+
+  <button id="backTop" class="back-top" aria-label="Volver arriba">↑</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
