@@ -432,3 +432,83 @@ footer {
     transition-duration: .01ms !important;
   }
 }
+/* ================================
+   BOTÓN DE MÚSICA
+================================ */
+
+.music-button {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+
+    width: 48px;
+    height: 48px;
+
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+
+    background: rgba(245, 239, 227, 0.92);
+    color: var(--gold-dark);
+
+    display: grid;
+    place-items: center;
+
+    font-size: 22px;
+    cursor: pointer;
+
+    z-index: 100;
+
+    box-shadow:
+        0 5px 20px rgba(60, 45, 25, 0.15);
+
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.music-button:hover {
+    transform: scale(1.08);
+    background: rgba(255, 252, 245, 0.98);
+}
+
+/* Cuando la música está reproduciéndose */
+.music-button.playing {
+    animation: musicPulse 2s infinite;
+}
+
+.music-button.playing #musicIcon {
+    animation: musicRotate 3s linear infinite;
+}
+
+@keyframes musicPulse {
+
+    0% {
+        box-shadow:
+            0 0 0 0 rgba(164, 135, 88, 0.35),
+            0 5px 20px rgba(60, 45, 25, 0.15);
+    }
+
+    70% {
+        box-shadow:
+            0 0 0 10px rgba(164, 135, 88, 0),
+            0 5px 20px rgba(60, 45, 25, 0.15);
+    }
+
+    100% {
+        box-shadow:
+            0 0 0 0 rgba(164, 135, 88, 0),
+            0 5px 20px rgba(60, 45, 25, 0.15);
+    }
+}
+
+@keyframes musicRotate {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
